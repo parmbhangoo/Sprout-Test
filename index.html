@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sprout | Find Your Companion</title>
+
+<style>
+:root {
+  --green: #B8D99D;
+  --dark-green: #35513B;
+  --cream: #FFF9ED;
+  --yellow: #F8D66D;
+  --pink: #F4B7B3;
+  --blue: #A9D3E8;
+  --purple: #C9B8E8;
+  --orange: #F4B477;
+  --white: #FFFFFF;
+  --dark: #27332A;
+  --gray: #718075;
+  --shadow: 0 18px 45px rgba(53,81,59,.13);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--dark);
+  background:
+    radial-gradient(circle at 5% 5%, #d9ebc9 0, transparent 25%),
+    radial-gradient(circle at 95% 15%, #ffe5a7 0, transparent 23%),
+    radial-gradient(circle at 80% 95%, #dfd2f3 0, transparent 25%),
+    var(--cream);
+}
+
+button {
+  font-family: inherit;
+}
+
+.page {
+  width: min(100%, 760px);
+  margin: auto;
+  padding: 18px 16px 40px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  text-align: center;
+  padding: 8px 0 20px;
+}
+
+.logo {
+  width: 145px;
+  height: 54px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* PLACEHOLDER LOGO */
+  background: var(--dark-green);
+  color: white;
+  border-radius: 18px;
+
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -1px;
+
+  box-shadow: 0 8px 0 rgba(53,81,59,.12);
+}
+
+.logo small {
+  font-size: 8px;
+  display: block;
+  letter-spacing: 2px;
+  margin-top: 3px;
+}
+
+.eyebrow {
+  margin: 16px 0 5px;
+  color: var(--dark-green);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(34px, 9vw, 54px);
+  line-height: .95;
+  letter-spacing: -2px;
+}
+
+.subtitle {
+  color: var(--gray);
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 550px;
+  margin: 13px auto 0;
+}
+
+/* =========================
+   DECORATIVE BLOBS
+========================= */
+
+.decor {
+  position: relative;
+}
+
+.decor::before,
+.decor::after {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.decor::before {
+  background: var(--yellow);
+  left: 2%;
+  top: 15%;
+}
+
+.decor::after {
+  background: var(--pink);
+  right: 2%;
+  bottom: 10%;
+}
+
+/* =========================
+   QUIZ CARD
+========================= */
+
+.quiz-card,
+.result-card {
+  background: rgba(255,255,255,.96);
+  border-radius: 30px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(53,81,59,.08);
+  overflow: hidden;
+}
+
+.quiz-card {
+  padding: 22px;
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--gray);
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 9px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 10px;
+  background: #edf1eb;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 16.66%;
+  border-radius: 99px;
+  background:
+    linear-gradient(
+      90deg,
+      var(--dark-green),
+      var(--green)
+    );
+  transition: width .4s ease;
+}
+
+.question-area {
+  padding-top: 28px;
+}
+
+.question-tag {
+  display: inline-block;
+  background: #edf5e9;
+  color: var(--dark-green);
+  border-radius: 99px;
+  padding: 7px 11px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.question {
+  font-size: clamp(25px, 7vw, 37px);
+  line-height: 1.08;
+  letter-spacing: -1px;
+  margin: 13px 0 22px;
+}
+
+/* =========================
+   ANSWERS
+========================= */
+
+.answers {
+  display: grid;
+  gap: 12px;
+}
+
+.answer {
+  position: relative;
+  border: 2px solid #e7ece5;
+  border-radius: 20px;
+  background: white;
+  padding: 15px;
+  text-align: left;
+  color: var(--dark);
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.35;
+  cursor: pointer;
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
+}
+
+.answer:hover {
+  transform: translateY(-3px);
+  border-color: var(--green);
+  box-shadow: 0 8px 20px rgba(53,81,59,.08);
+}
+
+.answer:active {
+  transform: scale(.98);
+}
+
+.answer-number {
+  display: inline-flex;
+  width: 31px;
+  height: 31px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #f0f3ef;
+  color: var(--dark-green);
+  font-size: 12px;
+  font-weight: 900;
+  margin-right: 8px;
+}
+
+.helper {
+  text-align: center;
+  color: var(--gray);
+  font-size: 11px;
+  margin: 18px 0 0;
+}
+
+/* =========================
+   RESULT
+========================= */
+
+.hidden {
+  display: none !important;
+}
+
+.result-card {
+  text-align: center;
+  padding: 25px 20px 28px;
+}
+
+.result-label {
+  color: var(--dark-green);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 900;
+}
+
+/* Plushie */
+
+.plush-stage {
+  position: relative;
+  width: 215px;
+  height: 215px;
+  margin: 17px auto 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 55px;
+
+  background:
+    radial-gradient(circle at 25% 20%, white 0 4%, transparent 5%),
+    linear-gradient(145deg, #f5f8f0, #fff5d8);
+
+  overflow: hidden;
+}
+
+.plush-stage::before,
+.plush-stage::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.plush-stage::before {
+  width: 55px;
+  height: 55px;
+  background: rgba(255,255,255,.65);
+  top: 18px;
+  left: 20px;
+}
+
+.plush-stage::after {
+  width: 35px;
+  height: 35px;
+  background: rgba(255,255,255,.5);
+  bottom: 22px;
+  right: 25px;
+}
+
+/* Generic plush graphic */
+
+.plush {
+  position: relative;
+  z-index: 2;
+  width: 135px;
+  height: 125px;
+  border-radius: 48% 48% 43% 43%;
+  background: var(--plush-color);
+  box-shadow:
+    inset -8px -10px 0 rgba(0,0,0,.06),
+    0 14px 20px rgba(0,0,0,.10);
+  animation: float 3s ease-in-out infinite;
+}
+
+.plush::before,
+.plush::after {
+  content: "";
+  position: absolute;
+  background: var(--plush-color);
+}
+
+/* ears */
+
+.plush::before {
+  width: 45px;
+  height: 50px;
+  left: -12px;
+  top: -22px;
+  border-radius: 60% 60% 40% 40%;
+  transform: rotate(-20deg);
+}
+
+.plush::after {
+  width: 45px;
+  height: 50px;
+  right: -12px;
+  top: -22px;
+  border-radius: 60% 60% 40% 40%;
+  transform: rotate(20deg);
+}
+
+.face {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%,-50%);
+  width: 95px;
+}
+
+.eyes {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 17px;
+}
+
+.eye {
+  width: 9px;
+  height: 12px;
+  border-radius: 50%;
+  background: #263229;
+}
+
+.nose {
+  width: 13px;
+  height: 10px;
+  border-radius: 50%;
+  background: #263229;
+  margin: 11px auto 5px;
+}
+
+.smile {
+  width: 18px;
+  height: 8px;
+  margin: auto;
+  border-bottom: 2px solid #263229;
+  border-radius: 50%;
+}
+
+/* Character colors */
+
+.business {
+  --plush-color: #F2B9B4;
+}
+
+.law {
+  --plush-color: #F4CF6D;
+}
+
+.education {
+  --plush-color: #B6D49D;
+}
+
+.engineering {
+  --plush-color: #F3C45E;
+}
+
+.medicine {
+  --plush-color: #B8D6EA;
+}
+
+/* tiny accessories */
+
+.accessory {
+  position: absolute;
+  z-index: 5;
+  font-size: 38px;
+}
+
+.business .accessory {
+  right: -18px;
+  bottom: 10px;
+}
+
+.law .accessory {
+  right: -17px;
+  bottom: 8px;
+}
+
+.education .accessory {
+  right: -16px;
+  bottom: 7px;
+}
+
+.engineering .accessory {
+  right: -16px;
+  bottom: 7px;
+}
+
+.medicine .accessory {
+  right: -16px;
+  bottom: 7px;
+}
+
+.result-name {
+  margin: 0;
+  font-size: clamp(32px, 9vw, 50px);
+  letter-spacing: -1.7px;
+  line-height: 1;
+}
+
+.result-description {
+  color: var(--gray);
+  line-height: 1.55;
+  max-width: 540px;
+  margin: 12px auto 18px;
+}
+
+.traits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.trait {
+  padding: 9px 12px;
+  border-radius: 99px;
+  background: #f0f5ed;
+  color: var(--dark-green);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.why {
+  text-align: left;
+  background: #fbfcfa;
+  border: 1px solid #e8eee5;
+  border-radius: 20px;
+  padding: 17px;
+  margin-bottom: 17px;
+}
+
+.why-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 900;
+  color: var(--dark-green);
+  margin-bottom: 7px;
+}
+
+.why-text {
+  color: var(--gray);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.buttons {
+  display: grid;
+  gap: 10px;
+}
+
+.primary,
+.secondary {
+  border: 0;
+  border-radius: 17px;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+
+.primary {
+  color: white;
+  background: var(--dark-green);
+}
+
+.secondary {
+  color: var(--dark-green);
+  background: #edf3e9;
+}
+
+.primary:hover,
+.secondary:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+  text-align: center;
+  padding: 22px 8px 0;
+  color: var(--gray);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.footer strong {
+  color: var(--dark-green);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+.fade {
+  animation: fade .35s ease;
+}
+
+.result-pop {
+  animation: resultPop .65s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes resultPop {
+  0% {
+    opacity: 0;
+    transform: scale(.75) rotate(-4deg);
+  }
+
+  65% {
+    opacity: 1;
+    transform: scale(1.04) rotate(1deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes float {
+  0%,100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@media (min-width: 650px) {
+
+  .page {
+    padding-top: 30px;
+  }
+
+  .quiz-card {
+    padding: 30px;
+  }
+
+  .answers {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .buttons {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <header class="header decor">
+
+    <!-- LOGO PLACEHOLDER -->
+    <!-- Replace this div later with your real Sprout logo -->
+    <div class="logo">
+      SPROUT
+    </div>
+
+    <div class="eyebrow">
+      Career Companion Quiz
+    </div>
+
+    <h1>
+      Who's your<br>
+      Sprout?
+    </h1>
+
+    <p class="subtitle">
+      Six quick questions. One unique companion.
+      Discover the workplace strengths that make you, you.
+    </p>
+
+  </header>
+
+
+  <!-- =====================
+       QUIZ
+  ====================== -->
+
+  <section id="quiz" class="quiz-card">
+
+    <div class="progress-top">
+      <span id="questionCount">QUESTION 1 OF 6</span>
+      <span id="percent">17%</span>
+    </div>
+
+    <div class="progress-track">
+      <div id="progress" class="progress"></div>
+    </div>
+
+
+    <div id="questionArea" class="question-area fade">
+
+      <div class="question-tag">
+        QUICK MATCH
+      </div>
+
+      <h2 id="question" class="question">
+      </h2>
+
+      <div id="answers" class="answers">
+      </div>
+
+      <p class="helper">
+        ✦ No wrong answers — just choose what feels most like you.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================
+       RESULT
+  ====================== -->
+
+  <section id="result" class="result-card hidden">
+
+    <div class="result-label">
+      ✨ YOUR SPROUT MATCH ✨
+    </div>
+
+    <div id="plushStage" class="plush-stage result-pop">
+      <!-- generated plush -->
+    </div>
+
+    <h2 id="resultName" class="result-name">
+    </h2>
+
+    <p id="resultDescription" class="result-description">
+    </p>
+
+    <div id="traits" class="traits">
+    </div>
+
+    <div class="why">
+
+      <div class="why-title">
+        Why you matched
+      </div>
+
+      <p id="whyText" class="why-text">
+      </p>
+
+    </div>
+
+    <div class="buttons">
+
+      <button id="meetButton" class="primary">
+        Meet Your Sprout →
+      </button>
+
+      <button id="restartButton" class="secondary">
+        Take It Again ↻
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <footer class="footer">
+
+    <strong>SPROUT</strong><br>
+
+    Building confidence for the workplace,
+    one skill at a time.
+
+    <br><br>
+
+    sprout.ca.vei@gmail.com · @sprout.vei
+
+  </footer>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   SPROUT QUIZ
+============================================================ */
+
+
+/* ----------------------------
+   CHARACTERS
+----------------------------- */
+
+const characters = {
+
+  business: {
+    name: "Business Bunny",
+
+    color: "business",
+
+    accessory: "💼",
+
+    description:
+      "You love turning ideas into action, bringing people together, and making things happen.",
+
+    traits: [
+      "Leadership",
+      "Communication",
+      "Creativity",
+      "Confidence"
+    ],
+
+    why:
+      "Your answers showed initiative, communication, organization, and a natural interest in turning ideas into something real."
+  },
+
+
+  law: {
+    name: "Law Lion",
+
+    color: "law",
+
+    accessory: "⚖️",
+
+    description:
+      "You like asking tough questions, thinking critically, and standing up for what matters.",
+
+    traits: [
+      "Critical Thinking",
+      "Advocacy",
+      "Confidence",
+      "Problem Solving"
+    ],
+
+    why:
+      "You showed a strong preference for reasoning, evidence, speaking up, and looking at different sides of a situation."
+  },
+
+
+  education: {
+    name: "Education Elephant",
+
+    color: "education",
+
+    accessory: "📚",
+
+    description:
+      "You notice people, listen carefully, and enjoy helping others learn and grow.",
+
+    traits: [
+      "Empathy",
+      "Patience",
+      "Communication",
+      "Teamwork"
+    ],
+
+    why:
+      "Your answers pointed toward patience, collaboration, communication, and making a positive difference for other people."
+  },
+
+
+  engineering: {
+    name: "Engineering Bee",
+
+    color: "engineering",
+
+    accessory: "🔧",
+
+    description:
+      "You are curious about how things work and love figuring out better ways to solve problems.",
+
+    traits: [
+      "Problem Solving",
+      "Curiosity",
+      "Innovation",
+      "Persistence"
+    ],
+
+    why:
+      "You showed curiosity, persistence, and a tendency to break complicated problems into smaller, solvable pieces."
+  },
+
+
+  medicine: {
+    name: "Medicine Monkey",
+
+    color: "medicine",
+
+    accessory: "🩺",
+
+    description:
+      "You combine curiosity, focus, and compassion with a desire to help people.",
+
+    traits: [
+      "Empathy",
+      "Science",
+      "Responsibility",
+      "Focus"
+    ],
+
+    why:
+      "Your answers showed a combination of science-minded curiosity, responsibility, focus, and care for other people."
+  }
+
+};
+
+
+/* ----------------------------
+   QUESTIONS
+----------------------------- */
+
+const questions = [
+
+  {
+    text:
+      "Your team has a big problem and nobody knows what to do. What do you do first?",
+
+    answers: [
+
+      {
+        text: "Take the lead and organize everyone.",
+        scores: {
+          business: 3,
+          law: 1
+        }
+      },
+
+      {
+        text: "Break the problem into smaller pieces.",
+        scores: {
+          engineering: 3,
+          business: 1
+        }
+      },
+
+      {
+        text: "Listen to everyone before deciding.",
+        scores: {
+          education: 3,
+          medicine: 1
+        }
+      },
+
+      {
+        text: "Ask questions and find the facts.",
+        scores: {
+          law: 3,
+          medicine: 2,
+          engineering: 1
+        }
+      }
+
+    ]
+  },
+
+
+  {
+    text:
+      "Which challenge sounds the most fun?",
+
+    answers: [
+
+      {
+        text: "Pitching an idea and convincing people.",
+        scores: {
+          business: 3,
+          law: 2
+        }
+      },
+
+      {
+        text: "Building or improving something.",
+        scores: {
+          engineering: 3,
+          business: 1
+        }
+      },
+
+      {
+        text: "Helping someone understand something.",
+        scores: {
+          education: 3,
+          medicine: 1
+        }
+      },
+
+      {
+        text: "Solving a complicated real-world problem.",
+        scores: {
+          medicine: 2,
+          law: 2,
+          engineering: 2
+        }
+      }
+
+    ]
+  },
+
+
+  {
+    text:
+      "People would probably describe you as...",
+
+    answers: [
+
+      {
+        text: "Confident and outgoing.",
+        scores: {
+          business: 3,
+          law: 2
+        }
+      },
+
+      {
+        text: "Curious and analytical.",
+        scores: {
+          engineering: 3,
+          medicine: 2
+        }
+      },
+
+      {
+        text: "Patient and supportive.",
+        scores: {
+          education: 3,
+          medicine: 2
+        }
+      },
+
+      {
+        text: "Independent and determined.",
+        scores: {
+          law: 2,
+          business: 2,
+          engineering: 2
+        }
+      }
+
+    ]
+  },
+
+
+  {
+    text:
+      "You have one free afternoon. Which sounds best?",
+
+    answers: [
+
+      {
+        text: "Planning a project or event.",
+        scores: {
+          business: 3,
+          education: 1
+        }
+      },
+
+      {
+        text: "Experimenting, designing, or making something.",
+        scores: {
+          engineering: 3,
+          medicine: 1
+        }
+      },
+
+      {
+        text: "Learning about people or society.",
+        scores: {
+          education: 2,
+          law: 2
+        }
+      },
+
+      {
+        text: "Learning about science, health, or the body.",
+        scores: {
+          medicine: 3,
+          engineering: 1
+        }
+      }
+
+    ]
+  },
+
+
+  {
+    text:
+      "When you disagree with someone, you usually...",
+
+    answers: [
+
+      {
+        text: "Explain my point and try to persuade them.",
+        scores: {
+          business: 2,
+          law: 3
+        }
+      },
+
+      {
+        text: "Ask questions to understand their reasoning.",
+        scores: {
+          law: 3,
+          education: 1
+        }
+      },
+
+      {
+        text: "Look for a solution that works for everyone.",
+        scores: {
+          education: 3,
+          business: 1
+        }
+      },
+
+      {
+        text: "Use evidence to find what makes sense.",
+        scores: {
+          engineering: 2,
+          medicine: 3
+        }
+      }
+
+    ]
+  },
+
+
+  {
+    text:
+      "What kind of impact would make you proud?",
+
+    answers: [
+
+      {
+        text: "Building an idea into something people use.",
+        scores: {
+          business: 3,
+          engineering: 2
+        }
+      },
+
+      {
+        text: "Standing up for people or important ideas.",
+        scores: {
+          law: 3,
+          education: 1
+        }
+      },
+
+      {
+        text: "Helping people learn and become confident.",
+        scores: {
+          education: 3,
+          business: 1
+        }
+      },
+
+      {
+        text: "Improving health or solving a difficult problem.",
+        scores: {
+          medicine: 3,
+          engineering: 2
+        }
+      }
+
+    ]
+  }
+
+];
+
+
+/* ----------------------------
+   STATE
+----------------------------- */
+
+let currentQuestion = 0;
+
+let scores = {
+  business: 0,
+  law: 0,
+  education: 0,
+  engineering: 0,
+  medicine: 0
+};
+
+let winner = null;
+
+
+/* ----------------------------
+   ELEMENTS
+----------------------------- */
+
+const questionElement =
+  document.getElementById("question");
+
+const answersElement =
+  document.getElementById("answers");
+
+const progressElement =
+  document.getElementById("progress");
+
+const questionCountElement =
+  document.getElementById("questionCount");
+
+const percentElement =
+  document.getElementById("percent");
+
+const questionArea =
+  document.getElementById("questionArea");
+
+const quiz =
+  document.getElementById("quiz");
+
+const result =
+  document.getElementById("result");
+
+const plushStage =
+  document.getElementById("plushStage");
+
+const resultName =
+  document.getElementById("resultName");
+
+const resultDescription =
+  document.getElementById("resultDescription");
+
+const traits =
+  document.getElementById("traits");
+
+const whyText =
+  document.getElementById("whyText");
+
+
+/* ----------------------------
+   RENDER QUESTION
+----------------------------- */
+
+function renderQuestion() {
+
+  const question = questions[currentQuestion];
+
+  const number = currentQuestion + 1;
+
+  const total = questions.length;
+
+  const percentage =
+    Math.round((number / total) * 100);
+
+
+  questionCountElement.textContent =
+    `QUESTION ${number} OF ${total}`;
+
+  percentElement.textContent =
+    `${percentage}%`;
+
+  progressElement.style.width =
+    `${percentage}%`;
+
+  questionElement.textContent =
+    question.text;
+
+
+  answersElement.innerHTML = "";
+
+
+  question.answers.forEach(
+    (answer, index) => {
+
+      const button =
+        document.createElement("button");
+
+      button.className =
+        "answer";
+
+
+      button.innerHTML = `
+        <span class="answer-number">
+          ${String.fromCharCode(65 + index)}
+        </span>
+
+        ${answer.text}
+      `;
+
+
+      button.addEventListener(
+        "click",
+        () => chooseAnswer(answer)
+      );
+
+
+      answersElement.appendChild(button);
+
+    }
+  );
+
+
+  questionArea.classList.remove("fade");
+
+  void questionArea.offsetWidth;
+
+  questionArea.classList.add("fade");
+
+}
+
+
+/* ----------------------------
+   ANSWER
+----------------------------- */
+
+function chooseAnswer(answer) {
+
+  Object.entries(answer.scores)
+    .forEach(([character, points]) => {
+
+      scores[character] += points;
+
+    });
+
+
+  if (
+    currentQuestion <
+    questions.length - 1
+  ) {
+
+    currentQuestion++;
+
+    renderQuestion();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  } else {
+
+    showResult();
+
+  }
+
+}
+
+
+/* ----------------------------
+   FIND WINNER
+----------------------------- */
+
+function calculateWinner() {
+
+  let highest = -Infinity;
+
+  let winners = [];
+
+
+  Object.entries(scores)
+    .forEach(([character, score]) => {
+
+      if (score > highest) {
+
+        highest = score;
+
+        winners = [character];
+
+      }
+
+      else if (score === highest) {
+
+        winners.push(character);
+
+      }
+
+    });
+
+
+  return winners[
+    Math.floor(
+      Math.random() * winners.length
+    )
+  ];
+
+}
+
+
+/* ----------------------------
+   GENERATE PLUSH
+----------------------------- */
+
+function createPlush(characterKey) {
+
+  const character =
+    characters[characterKey];
+
+
+  plushStage.innerHTML = "";
+
+
+  const plush =
+    document.createElement("div");
+
+  plush.className =
+    `plush ${character.color}`;
+
+
+  plush.innerHTML = `
+
+    <div class="face">
+
+      <div class="eyes">
+        <span class="eye"></span>
+        <span class="eye"></span>
+      </div>
+
+      <div class="nose"></div>
+
+      <div class="smile"></div>
+
+    </div>
+
+    <div class="accessory">
+      ${character.accessory}
+    </div>
+
+  `;
+
+
+  plushStage.appendChild(plush);
+
+}
+
+
+/* ----------------------------
+   SHOW RESULT
+----------------------------- */
+
+function showResult() {
+
+  winner =
+    calculateWinner();
+
+
+  const character =
+    characters[winner];
+
+
+  createPlush(winner);
+
+
+  resultName.textContent =
+    `You got ${character.name}!`;
+
+
+  resultDescription.textContent =
+    character.description;
+
+
+  traits.innerHTML = "";
+
+
+  character.traits.forEach(
+    trait => {
+
+      const span =
+        document.createElement("span");
+
+      span.className = "trait";
+
+      span.textContent = trait;
+
+      traits.appendChild(span);
+
+    }
+  );
+
+
+  whyText.textContent =
+    character.why;
+
+
+  quiz.classList.add("hidden");
+
+  result.classList.remove("hidden");
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* ----------------------------
+   RESTART
+----------------------------- */
+
+document
+  .getElementById("restartButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      currentQuestion = 0;
+
+      winner = null;
+
+
+      Object.keys(scores)
+        .forEach(
+          key => scores[key] = 0
+        );
+
+
+      result.classList.add("hidden");
+
+      quiz.classList.remove("hidden");
+
+
+      renderQuestion();
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+  );
+
+
+/* ----------------------------
+   MEET YOUR SPROUT
+----------------------------- */
+
+document
+  .getElementById("meetButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      if (!winner) return;
+
+      const character =
+        characters[winner];
+
+
+      alert(
+        `${character.name}\n\n` +
+        `Ask a Sprout team member to meet ` +
+        `your companion and learn more!`
+      );
+
+    }
+  );
+
+
+/* ----------------------------
+   START
+----------------------------- */
+
+renderQuestion();
+
+</script>
+
+</body>
+</html>
